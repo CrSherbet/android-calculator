@@ -23,21 +23,53 @@ public class CalculatorPresenter {
 
     public void reset() {
         calculator.reset();
-        view.setCalculatorResult(calculator.getResult());
+        view.setCalculatorResult(0);
     }
 
     public void onNumberClick(int num) {
-        calculator.setResult(num);
-        view.setCalculatorResult(num);
+        int number = calculator.getSecond() *10;
+        number += num;
+        calculator.setSecond(number);
+        view.setCalculatorResult(number);
+    }
+
+    public void updateCalculator(){
+        int result = calculator.operate(calculator.getOperator(), calculator.getSecond());
+        calculator.setFirst(result);
+        calculator.setSecond(0);
     }
 
     public void onOpClick(int op) {
-        view.setCalculatorResult(op);
+        if(op != OPERATOR_EQ) {
+            view.setBlank();
+            if(calculator.isFirstTime()) {
+                calculator.setFirstTime(false);
+                calculator.setFirst(calculator.getSecond());
+                calculator.setOperator(op);
+                if(op == OPERATOR_DIV ||op == OPERATOR_MUL)
+                    calculator.setSecond(1);
+                else
+                    calculator.setSecond(0);
+            }
+            updateCalculator();
+            calculator.setOperator(op);
+        }
+        else {
+            updateCalculator();
+            calculator.setSecond(calculator.getFirst());
+            calculator.setFirstTime(true);
+            view.setCalculatorResult(calculator.getFirst());
+        }
     }
 
     public void onResetClick() {
+       reset();
     }
 
     public void onBackClick() {
+        int number = calculator.getSecond()/10;
+        calculator.setSecond( number );
+        view.setCalculatorResult( number );
+
     }
 }
