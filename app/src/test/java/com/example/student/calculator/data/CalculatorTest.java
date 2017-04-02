@@ -79,7 +79,7 @@ public class CalculatorTest {
         assertTrue(calculator.isError());
     }*/
 
-   /* @Test
+    @Test
     public void shouldKeepErrorStateUntilReset(){
         calculator.reset();
         assertFalse(calculator.isError());
@@ -90,5 +90,5 @@ public class CalculatorTest {
 
         calculator.operate(calculator.OPERATOR_ADD,10);
         assertTrue(calculator.isError());
-    }*/
+    }
 }
